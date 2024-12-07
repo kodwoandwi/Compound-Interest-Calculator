@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compound Interest Calculator</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class = "form-container">
+            <h1>Compound Interest Calculator</h1>
+            <form action="/" method="POST">
+                <label for="principal">Initial Amount (Principal):</label>
+                <input type="number" name="principal" id="principal" required><br><br>
+
+                <label for="interestRate">Daily Interest Rate (in %):</label>
+                <input type="number" name="interestRate" id="interestRate" step="0.01" required><br><br>
+
+                <label for="numDays">Length of Terms (in days):</label>
+                <input type="number" name="numDays" id="numDays" required><br><br>
+
+                <label for="startDate">Start Date:</label>
+                <input type="date" name="startDate" id="startDate" required><br><br>
+
+                <button type="submit">Calculate</button>
+            </form>
+        </div>
+
+        <div class = "results-container">
+            <% if (result && result.length > 0) { %>
+                <h2>Results:</h2>
+                <p>You started with an investment of: $<%= principal %> on <%= startDate %> at the rate $<%=interestRate%></p>
+                <p>Your principal amount grew to: $<%= totalAmount %> by <%= result[result.length - 1].date %></p>
+                <p>Your total cash withdrawals were: $<%= totalWithdrawals %> over the course of <%= result.length %> business days</p>
+                <p>Your total NET profit for the <%= result.length %>-day period was: $<%= netProfit %></p>
+
+            <!-- Table with detailed results -->
+            <table>
+                <thead>
+                    <tr>
+                        <th>Day</th>
+                        <th>Date</th>
+                        <th>Daily Interest</th>
+                        <th>Net Compounded Profits</th>
+                        <th>Total Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% result.forEach(function(entry) { %>
+                    <tr>
+                        <td><%= entry.day %></td>
+                        <td><%= entry.date %></td>
+                        <td>$<%= entry.dailyInterest %></td>
+                        <td>$<%= entry.netProfit %></td>
+                        <td>$<%= entry.totalAmount %></td>
+                    </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+            <% } %>
+        </div>
+    </div>
+</body>
+</html>
